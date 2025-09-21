@@ -27,6 +27,10 @@ public:
   uint16_t getCount1_0(void);
   uint16_t getCount2_5(void);
   bool connected(void);
+  void sleep(Stream *stream);
+  void wakeUp(Stream *stream);
+  bool isSleeping(void);
+
 
   /** For PMS5003 */
   uint16_t getCount5_0(void);
@@ -61,6 +65,7 @@ private:
    */
   unsigned long lastPackage = 0;
   bool _connected;
+  bool _sleeping;
 
   unsigned long lastReadPackage = 0;
 

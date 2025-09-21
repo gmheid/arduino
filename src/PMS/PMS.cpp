@@ -13,6 +13,7 @@ bool PMSBase::begin(Stream *stream) {
 
   failCount = 0;
   _connected = false;
+  _sleeping = false;
 
   // empty first
   int bytesCleared = 0;
@@ -26,6 +27,9 @@ bool PMSBase::begin(Stream *stream) {
   uint8_t activeModeCommand[] = { 0x42, 0x4D, 0xE1, 0x00, 0x01, 0x01, 0x71 };
   size_t bytesWritten = stream->write(activeModeCommand, sizeof(activeModeCommand));
   Serial.printf("%d byte(s) written\n", bytesWritten);
+  Serial.printf("setting wakeUp mode\n");
+  wakeUp(stream);
+  delay(5000);
 
   // Run and check sensor data for 4sec
   unsigned long lastInit = millis();
@@ -453,3 +457,22 @@ void PMSBase::parse(const uint8_t *buf) {
   pms_firmwareVersion = buf[28];
   pms_errorCode = buf[29];
 }
+
+// Standby mode. For low power consumption and prolong the life of the sensor.
+void PMSBase::sleep(Stream *stream)
+{
+  uint8_t command[] = { 0x42, 0x4D, 0xE4, 0x00, 0x00, 0x01, 0x73 };
+  stream->write(command, sizeof(command));
+  _sleeping = true;
+}
+
+// Operating mode. Stable data should be got at least 30 seconds after the sensor wakeup from the sleep mode because of the fan's performance.
+void PMSBase::wakeUp(Stream *stream)
+{
+  uint8_t command[] = { 0x42, 0x4D, 0xE4, 0x00, 0x01, 0x01, 0x74 };
+  stream->write(command, sizeof(command));
+  _sleeping = false;
+}
+
+bool PMSBase::isSleeping(void) { return _sleeping; }
+

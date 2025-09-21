@@ -8,6 +8,8 @@
 #include "AgWiFiConnector.h"
 #include <Arduino.h>
 #include <WebServer.h>
+#include "PMS/PMS5003.h"
+#include "PMS/PMS.h"
 
 class LocalServer : public PrintLog {
 private:
@@ -33,6 +35,9 @@ public:
   void _PUT_config(void);
   void _GET_metrics(void);
   void _GET_measure(void);
+  void _PMS_sleep(void);
+  void _PMS_wakeup(void);
+  void _GET_restart(void);
 };
 
 #endif /** _LOCAL_SERVER_H_ */

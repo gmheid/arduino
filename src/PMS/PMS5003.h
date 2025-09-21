@@ -47,6 +47,10 @@ public:
   int getFirmwareVersion(void);
   uint8_t getErrorCode(void);
   bool connected(void);
+  void sleep(void);
+  void wakeUp(void);
+  bool isSleeping(void);
+
 
 private:
   bool _isBegin = false;

@@ -13,6 +13,9 @@ bool LocalServer::begin(void) {
   server.on(openMetrics.getApi(), HTTP_GET, [this]() { _GET_metrics(); });
   server.on("/config", HTTP_GET, [this]() { _GET_config(); });
   server.on("/config", HTTP_PUT, [this]() { _PUT_config(); });
+  server.on("/sleep", HTTP_GET, [this]() { _PMS_sleep(); });
+  server.on("/wakeup", HTTP_GET, [this]() { _PMS_wakeup(); });
+  server.on("/restart", HTTP_GET, [this]() { _GET_restart(); });
   server.begin();
 
   if (xTaskCreate(
@@ -69,3 +72,20 @@ void LocalServer::_GET_measure(void) {
 }
 
 void LocalServer::setFwMode(AgFirmwareMode fwMode) { this->fwMode = fwMode; }
+
+void LocalServer::_PMS_sleep(void) {
+  ag->pms5003.sleep();
+  server.send(200, "text/plain", "Sleep Success\n");
+}
+
+void LocalServer::_PMS_wakeup(void) {
+  ag->pms5003.wakeUp();
+  server.send(200, "text/plain", "Wakeup Success\n");
+}
+
+void LocalServer::_GET_restart(void) {
+  server.send(200, "text/plain", "Success\n");
+  delay(1000);
+  ESP.restart();
+}
+

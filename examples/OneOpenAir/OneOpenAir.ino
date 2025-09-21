@@ -1237,7 +1237,10 @@ static void updateTvoc(void) {
 }
 
 static void updatePMS5003() {
-  if (ag->pms5003.connected()) {
+  bool SensorSleeping;
+  SensorSleeping = ag->pms5003.isSleeping();
+  Serial.printf("PMS sleeping: %s\n", SensorSleeping ? "true" : "false");
+  if (ag->pms5003.connected() && !SensorSleeping) {
     measurements.update(Measurements::PM01, ag->pms5003.getPm01Ae());
     measurements.update(Measurements::PM25, ag->pms5003.getPm25Ae());
     measurements.update(Measurements::PM10, ag->pms5003.getPm10Ae());

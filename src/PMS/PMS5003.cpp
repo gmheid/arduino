@@ -25,6 +25,7 @@ bool PMS5003::begin(Stream *_debugStream) {
  */
 bool PMS5003::begin(HardwareSerial &serial) {
   this->_serial = &serial;
+  // pms.wakeUp(this->_serial);
   return this->begin();
 }
 #endif
@@ -266,3 +267,22 @@ int PMS5003::getFailCount(void) { return pms.getFailCount(); }
  * @return int 
  */
 int PMS5003::getFailCountMax(void) { return pms.getFailCountMax(); }
+
+/**
+ * @brief Standby mode. For low power consumption and prolong the life of the sensor.
+ */
+void PMS5003::sleep(void) { pms.sleep(this->_serial); }
+
+/**
+ * @brief Operating mode. Stable data should be got at least 30 seconds after the sensor wakeup from the sleep mode because of the fan's performance.
+ */
+void PMS5003::wakeUp(void) { pms.wakeUp(this->_serial); }
+
+/**
+ * @brief Is sensor sleeping
+ * 
+ * @return true sleeping
+ * @return false not sleeping
+ */
+bool PMS5003::isSleeping(void) { return pms.isSleeping(); }
+
