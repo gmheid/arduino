@@ -1040,6 +1040,7 @@ void initializeNetwork() {
   
     // Ignore the rest if cloud connection to AirGradient is disabled
     if (configuration.isCloudConnectionDisabled()) {
+      sendDataToAg();
       return;
     }
 
