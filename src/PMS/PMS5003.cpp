@@ -190,21 +190,21 @@ float PMS5003::compensate(float pm25, float humidity) { return pms.compensate(pm
 
 /**
  * @brief Get sensor firmware version
- * 
+ *
  * @return int
  */
 int PMS5003::getFirmwareVersion(void) { return _ver; }
 
 /**
  * @brief Get sensor error code
- * 
- * @return uint8_t 
+ *
+ * @return uint8_t
  */
 uint8_t PMS5003::getErrorCode(void) { return pms.getErrorCode(); }
 
 /**
  * @brief Is sensor connect with device
- * 
+ *
  * @return true Connected
  * @return false Removed
  */
@@ -256,15 +256,15 @@ void PMS5003::resetFailCount(void) {
 
 /**
  * @brief Get number of fail count
- * 
- * @return int 
+ *
+ * @return int
  */
 int PMS5003::getFailCount(void) { return pms.getFailCount(); }
 
 /**
  * @brief Get number of fail count max
- * 
- * @return int 
+ *
+ * @return int
  */
 int PMS5003::getFailCountMax(void) { return pms.getFailCountMax(); }
 
