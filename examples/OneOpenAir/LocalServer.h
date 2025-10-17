@@ -38,6 +38,9 @@ public:
   void _PMS_sleep(void);
   void _PMS_wakeup(void);
   void _GET_restart(void);
+  void _GET_night(void);
+  void _GET_night2(void);
+  void _GET_day(void);
 };
 
 #endif /** _LOCAL_SERVER_H_ */

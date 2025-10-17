@@ -16,6 +16,9 @@ bool LocalServer::begin(void) {
   server.on("/sleep", HTTP_GET, [this]() { _PMS_sleep(); });
   server.on("/wakeup", HTTP_GET, [this]() { _PMS_wakeup(); });
   server.on("/restart", HTTP_GET, [this]() { _GET_restart(); });
+  server.on("/night", HTTP_GET, [this]() { _GET_night(); });
+  server.on("/night2", HTTP_GET, [this]() { _GET_night2(); });
+  server.on("/day", HTTP_GET, [this]() { _GET_day(); });
   server.begin();
 
   if (xTaskCreate(
@@ -87,5 +90,49 @@ void LocalServer::_GET_restart(void) {
   server.send(200, "text/plain", "Success\n");
   delay(1000);
   ESP.restart();
+}
+
+// Nightmode: Display off and LED 5%
+void LocalServer::_GET_night(void) {
+    ag->pms5003.sleep();
+    String data = "{\"ledBarBrightness\": 5, \"displayBrightness\": 0 }";
+    String response = "";
+    int statusCode = 400; // Status code for data invalid
+    if (config.parse(data, true)) {
+      statusCode = 200;
+      response = "Success";
+    } else {
+      response = config.getFailedMesage();
+    }
+    server.send(statusCode, "text/plain", response);
+}
+
+//Nightmode2: Display and LED off
+void LocalServer::_GET_night2(void) {
+    ag->pms5003.sleep();
+    String data = "{\"ledBarBrightness\": 0, \"displayBrightness\": 0 }";
+    String response = "";
+    int statusCode = 400; // Status code for data invalid
+    if (config.parse(data, true)) {
+      statusCode = 200;
+      response = "Success";
+    } else {
+      response = config.getFailedMesage();
+    }
+    server.send(statusCode, "text/plain", response);
+}
+
+void LocalServer::_GET_day(void) {
+    ag->pms5003.wakeUp();
+    String data = "{\"ledBarBrightness\": 15, \"displayBrightness\": 50 }";
+    String response = "";
+    int statusCode = 400; // Status code for data invalid
+    if (config.parse(data, true)) {
+      statusCode = 200;
+      response = "Success";
+    } else {
+      response = config.getFailedMesage();
+    }
+    server.send(statusCode, "text/plain", response);
 }
 
