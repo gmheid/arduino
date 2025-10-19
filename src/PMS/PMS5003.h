@@ -49,7 +49,7 @@ public:
   bool connected(void);
   void sleep(void);
   void wakeUp(void);
-  bool isSleeping(void);
+  
 
 
 private:

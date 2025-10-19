@@ -29,7 +29,6 @@ public:
   bool connected(void);
   void sleep(Stream *stream);
   void wakeUp(Stream *stream);
-  bool isSleeping(void);
 
 
   /** For PMS5003 */
@@ -65,7 +64,6 @@ private:
    */
   unsigned long lastPackage = 0;
   bool _connected;
-  bool _sleeping;
 
   unsigned long lastReadPackage = 0;
 
