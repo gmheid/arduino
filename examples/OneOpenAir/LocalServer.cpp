@@ -100,7 +100,7 @@ void LocalServer::_GET_night(void) {
     int statusCode = 400; // Status code for data invalid
     if (config.parse(data, true)) {
       statusCode = 200;
-      response = "Success";
+      response = "Nightmode Success";
     } else {
       response = config.getFailedMesage();
     }
@@ -115,7 +115,7 @@ void LocalServer::_GET_night2(void) {
     int statusCode = 400; // Status code for data invalid
     if (config.parse(data, true)) {
       statusCode = 200;
-      response = "Success";
+      response = "Nightmode2 Success";
     } else {
       response = config.getFailedMesage();
     }
@@ -129,7 +129,7 @@ void LocalServer::_GET_day(void) {
     int statusCode = 400; // Status code for data invalid
     if (config.parse(data, true)) {
       statusCode = 200;
-      response = "Success";
+      response = "Daymode Success";
     } else {
       response = config.getFailedMesage();
     }
